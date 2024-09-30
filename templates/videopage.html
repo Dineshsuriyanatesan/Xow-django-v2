@@ -925,13 +925,25 @@ fetch("{% static 'files/sheets.csv' %}")
   }
 });
 
-function timeToSeconds(time) {
-    const parts = time.split(':');
-    const hours = parseInt(parts[0], 10);
-    const minutes = parseInt(parts[1], 10);
-    const seconds = parseInt(parts[2], 10);
-    return hours * 3600 + minutes * 60 + seconds;
+ // Function to convert time in HH:MM:SS AM/PM format to seconds
+ function timeToSeconds(time) {
+      let [timePart, modifier] = time.split(' '); // Split time and AM/PM
+      const parts = timePart.split(':');
+      
+      let hours = parseInt(parts[0], 10);
+      const minutes = parseInt(parts[1], 10);
+      const seconds = parseInt(parts[2], 10);
+
+      // If AM/PM is provided, adjust hours accordingly
+      if (modifier === 'PM' && hours !== 12) {
+          hours += 12; // Convert PM hours to 24-hour format
+      } else if (modifier === 'AM' && hours === 12) {
+          hours = 0; // Convert 12:XX AM to 00:XX
+      }
+
+      return hours * 3600 + minutes * 60 + seconds;
   }
+
 
   
 
@@ -955,7 +967,22 @@ let hr = parseInt("{{hr}}")
 let min = parseInt("{{min}}")
 let sec = parseInt("{{sec}}")
 function playVideoAtStartTime(startTime) {
-  const [hours, minutes, seconds] = startTime.split(':');
+  let [timePart, modifier] = startTime.split(' '); // Split time and AM/PM
+      const parts = timePart.split(':');
+      
+      let hours = parseInt(parts[0], 10);
+      const minutes = parseInt(parts[1], 10);
+      const seconds = parseInt(parts[2], 10);
+
+      // If AM/PM is provided, adjust hours accordingly
+      if (modifier === 'PM' && hours !== 12) {
+          hours += 12; // Convert PM hours to 24-hour format
+      } else if (modifier === 'AM' && hours === 12) {
+          hours = 0; // Convert 12:XX AM to 00:XX
+      } 
+      console.log("hours from jump_time ",hours) 
+      
+  
   const totalSeconds = parseInt(hours-hr) * 3600 + parseInt(minutes-min) * 60 + parseInt(seconds-sec);
 
   videoPlayer.currentTime = totalSeconds;
@@ -988,7 +1015,7 @@ function updateSearchResults(detailsArray) {
     companyDiv.innerHTML = `Company Name: ${details.Company_Name}`; // Correct case for "Company_Name"
     
     const startTimeDiv = document.createElement('div');
-    startTimeDiv.innerHTML = `Start Time: ${details.DATE_AND_TIME}`;
+    startTimeDiv.innerHTML =`Start Time:${details.DATE_AND_TIME}`;
     
     // Create a right arrow in a circular icon
     const arrowDiv = document.createElement('div');
@@ -1049,15 +1076,35 @@ function displayDetailsAndPlay(detailsArray) {
 video_url1=document.getElementById("videoPlayer").src;
 // Function to play video segment based on start and end times
 function playVideoSegment(startTime, endTime) {
-  const [startHours, startMinutes, startSeconds] = startTime.split(':');
+  console.log("start-time from videosegment--->>",startTime)
+  let [timePart, modifier] = startTime.split(' '); // Split time and AM/PM
+      const parts = timePart.split(':');
+      console.log("parts from videosegment--->>",parts)
+      console.log("Modifier ==== ",modifier.trim());
+      
+      modifier = modifier.trim();
+      
+      let hours = parseInt(parts[0], 10);
+      const minutes = parseInt(parts[1], 10);
+      const seconds = parseInt(parts[2], 10);
+      
+      // If AM/PM is provided, adjust hours accordingly
+      if (modifier === 'pm' && hours !== 12) {
+        hours += 12; // Convert PM hours to 24-hour format
+      } 
+      else if (modifier === 'AM' && hours === 12) {
+        hours = 0; // Convert 12:XX AM to 00:XX
+      } 
+      console.log("hours from videosegment--->>",hours)
     // const [endHours, endMinutes, endSeconds] = endTime.split(':');
 
-    const startTotalSeconds = parseInt(startHours-hr) * 3600 + parseInt(startMinutes-min) * 60 + parseInt(startSeconds-sec);
+  const startTotalSeconds = parseInt(hours-hr) * 3600 + parseInt(minutes-min) * 60 + parseInt(seconds-sec);
+  console.log("startTotalSeconds from playvideoSegment",startTotalSeconds)
     // const endTotalSeconds = parseInt(endHours-18) * 3600 + parseInt(endMinutes-0) * 60 + parseInt(endSeconds-56);
 
-    videoPlayer.src = video_url1; // Replace with the actual video source URL
-    videoPlayer.currentTime = startTotalSeconds; // Set starting point in seconds
-    videoPlayer.play();
+    // videoPlayer.src = video_url1; // Replace with the actual video source URL
+  videoPlayer.currentTime = startTotalSeconds; // Set starting point in seconds
+  videoPlayer.play();
 
     // const intervalId = setInterval(() => {
     //   if (videoPlayer.currentTime >= endTotalSeconds) {

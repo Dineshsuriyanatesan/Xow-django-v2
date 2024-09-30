@@ -1,17 +1,16 @@
 QR CODE,Name,Company Name,Phone,Email,DATE AND TIME
 ,,,,,
-123456,John Doe,ABC Corp,123-456-7890,john.doe@example.com, 12:16:00 PM
-6789456,Jane Smith,XYZ Ltd,987-654-3210,jane.smith@example.com,12:18:00
-111222333,Alice Johnson,Tech Innovators,555-123-4567,alice.johnson@example.com, 12:18:10 PM
-785544,Bob Brown,Gadget Co,777-888-9999,bob.brown@example.com,12:18:00
-4578213,Eva Lee,Data Solutions,111-222-3333 ,eva.lee@example.com,12:19:00
-4578223,Harry,AI,111-222-4333 ,ai.co@example.com,12:18:19PM
-457823,Oscar,data scientist,111-222-9333 ,data@example.com,12:19:00PM
-457213,Archie,soft ware,111-222-90333 ,eva.@example.com,12:18:35PM
-4578213,Henry,tainee,111-222-88333 ,traiee.lee@example.com,12:19:02PM
-4578613,Canvan,solution aws,111-222-78333 ,solution.aws.lee@example.com,01:06:00PM
-4570213,Ben,solution gcp,111-222-899333 ,solution.gcp.lee@example.com,01:10:11PM
-457800213,Neville,solution azure,111-222-903 ,solution.azure@example.com,12:18:14
-457890213,Newton,haszicorp,111-222-90333 ,solution.hasi@example.com,01:07:08PM
-4578900213,Piers,meta,555-777-333,meta.co@example.com,12:19:00
-123409+3,Bailey,Bailiff,111-888-333,meta.co@example.com,12:18:01
+123456,John Doe,ABC Corp,123-456-7890,john.doe@example.com,1:02:55 AM
+6789456,Jane Smith,XYZ Ltd,987-654-3210,jane.smith@example.com,1:03:55 PM
+111222333,Alice Johnson,Tech Innovators,555-123-4567,alice.johnson@example.com,1:04:30 AM
+785544,Bob Brown,Gadget Co,777-888-9999,bob.brown@example.com,1:08:53 PM
+4578213,Eva Lee,Data Solutions,111-222-3333 ,eva.lee@example.com,1:09:23 PM
+4578223,Danil,AI,111-222-4333 ,ai.co@example.com,1:14:59 PM
+457823,Danil,data scientist,111-222-9333 ,data@example.com,1:15:55 AM
+457213,David,soft ware,111-222-90333 ,eva.@example.com,1:03:13 PM
+4578213,David,tainee,111-222-88333 ,traiee.lee@example.com,1:13:03 AM
+4578613,Danil,solution aws,111-222-78333 ,solution.aws.lee@example.com,1:05:07 PM
+4570213,Helen,solution gcp,111-222-899333 ,solution.gcp.lee@example.com,1:06:01 PM
+457800213,Patrick,solution azure,111-222-903 ,solution.azure@example.com,1:18:55 AM
+457890213,Nelson,haszicorp,111-222-90333 ,solution.hasi@example.com,1:19:02 PM
+4578900213,Hatrick,meta,890,meta.co@example.com,1:10:10 AM

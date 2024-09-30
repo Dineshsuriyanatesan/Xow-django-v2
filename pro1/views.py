@@ -181,66 +181,32 @@ def post_createcsv(request):
     # Calculate video duration in seconds
     video_duration_seconds = int(total_frames / fps)
     print("Video Duration = ",video_duration_seconds)
-    
-    
-    #regex_str = r'Date:\s(\d{4}-\d{2}-\d{2})\sTime:\s(\d{2}\:\d{2}\:\d{2}\s(?:AM|PM))\sFrame:\s(\d{2}:\d{2}:\d{2}:\d{2})'
-    # Compiling the time pattern for matching
-    time_pattern = re.compile(r'\d{2}:\d{2}:\d{2}')
 
-    # Function to convert time string to seconds
-    def time_to_seconds(time_str):
-        matches = time_pattern.findall(time_str)
-        if not matches:
-            return 0  # In case no valid time pattern is found
-
-        total_seconds = 0
-        for match in matches:
-            hours, minutes, seconds = map(int, match.split(':'))
-            total_seconds += hours * 3600 + minutes * 60 + seconds
-        return total_seconds
+    initial_time=get_initial_time(video_path)
 
     # Main video processing loop
-    for frame_count in range(100):
-        # Read the frame
-        ret, frame = cap.read()
-        if not ret:
-            print("Frame could not be read. Exiting...")
-            break
-
-        # Define the region to crop timestamp
-        x, y, w, h = 0, 0, 1000, 100
-        timestamp_crop = frame[y:y+h, x:x+w]
-
-        # Perform OCR to extract text from the timestamp region
-        text = pytesseract.image_to_string(timestamp_crop, lang='eng', config='--psm 6')
-
-        # Clean up the OCR text
-        if "AM" in text or "PM" in text:
-            text = text.replace("AM", "").replace("PM", "")
+    def parse_time(time_str):
+        try:
+            return datetime.strptime(time_str, '%I:%M:%S %p')
+        except ValueError:
+            pass
         
-        if "." in text:
-            text = text.replace(".", ":")
+        try:
+            return datetime.strptime(time_str, '%H:%M:%S')
+        except ValueError:
+            return None
 
-        # Check if the desired time pattern is found
-        if time_pattern.search(text):
-            print(f"Desired time pattern found: {text}. Stopping processing.")
-            break
-
-    # If a valid time pattern is found, convert it to seconds
-    if time_pattern.search(text):
-        total_seconds = time_to_seconds(text)
-        print(f"Total seconds: {total_seconds}")
-    else:
-        print("No valid time pattern found.")
-
-    # Perform image processing on the timestamp region (cropped frame)
-    timestamp_gray = cv2.cvtColor(timestamp_crop, cv2.COLOR_BGR2GRAY)
-    _, timestamp_thresh = cv2.threshold(timestamp_gray, 127, 255, cv2.THRESH_BINARY)
-
-    # Save the processed image
-    cv2.imwrite("frame_1.jpg", timestamp_thresh)
-    text_sp = text.split("Time: ")[1].split(" Frame:")[0]
-    time1= text_sp.split(":")
+    def time_to_seconds(time_str):
+        dt = parse_time(time_str)
+        print(f" its dt from time to seconds-->>{time_str}")
+        if dt:
+            return dt.hour * 3600 + dt.minute * 60 + dt.second
+        return 0
+    total_seconds=time_to_seconds(initial_time)
+    time_samp=seconds_to_time(total_seconds)
+    print(f"time stamp from post_createcsv-->>{time_samp}")
+    time1= time_samp.split(":")
+    print(f"time1 from ---->>{time1}")
     hours = int(time1[0])
     minutes = int(time1[1])
     seconds = int(time1[2])
