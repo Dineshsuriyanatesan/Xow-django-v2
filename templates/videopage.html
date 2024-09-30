@@ -1,0 +1,1072 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-widtqh, initial-scale=1.0" />
+    <title>after csv</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+      integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <style>
+      body {
+        background-image: url("https://images.saymedia-content.com/.image/t_share/MTkzOTUzODU0MDkyODc5MzY1/particlesjs-examples.gif");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        height: 100%;
+      }
+
+      .navbar {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-link {
+        position: relative;
+        color: #333; /* Default text color */
+        text-decoration: none; /* Remove the default underline */
+        transition: color 0.3s ease-in-out;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: #663dff; /* Change this color to your desired underline color */
+        transform: scaleX(0);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .nav-link:hover {
+        color: #b621fe; /* Change this color to your desired hover text color */
+      }
+
+      .nav-link:hover::after {
+        transform: scaleX(1);
+      }
+
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .div1 {
+        margin-top: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container,
+      .video-controls,
+      .video-timer,
+      .options {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        /* width: 100%; */
+        user-select: none;
+        overflow: hidden;
+        max-width: 200;
+        max-height: 100vh;
+        border-radius: 10px;
+        background: transparent;
+        padding-inline: 0px;
+        aspect-ratio: 16 / 11;
+        position: relative;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .container.fullscreen {
+        max-width: 100%;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0px;
+      }
+      .wrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        opacity: 0;
+        bottom: -15px;
+        transition: all 0.08s ease;
+      }
+      .container.show-controls .wrapper {
+        opacity: 1;
+        bottom: 0;
+        transition: all 0.13s ease;
+      }
+      .wrapper::before {
+        content: "";
+        bottom: 0;
+        width: 100%;
+        z-index: -1;
+        position: absolute;
+        height: calc(100% + 35px);
+        pointer-events: none;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      }
+      .video-timeline {
+        height: 7px;
+        width: 100%;
+        cursor: pointer;
+      }
+      .video-timeline .progress-area {
+        height: 3px;
+        position: relative;
+        background: rgba(255, 255, 255, 0.6);
+      }
+      .progress-area span {
+        position: absolute;
+        left: 50%;
+        top: -25px;
+        font-size: 13px;
+        color: #fff;
+        pointer-events: none;
+        transform: translateX(-50%);
+      }
+      .progress-area .progress-bar {
+        width: 0%;
+        height: 100%;
+        position: relative;
+        background: #2289ff;
+        transition: width 0.1s ease-in-out;
+      }
+      .progress-bar::before {
+        content: "";
+        right: 0;
+        top: 50%;
+        height: 13px;
+        width: 13px;
+        position: absolute;
+        border-radius: 50%;
+        background: #2289ff;
+        transform: translateY(-50%);
+      }
+      .progress-bar::before,
+      .progress-area span {
+        display: none;
+      }
+      .video-timeline:hover .progress-bar::before,
+      .video-timeline:hover .progress-area span {
+        display: block;
+      }
+      .wrapper .video-controls {
+        padding: 5px 20px 10px;
+      }
+      .video-controls .options {
+        width: 100%;
+      }
+      .video-controls .options:first-child {
+        justify-content: flex-start;
+      }
+      .video-controls .options:last-child {
+        justify-content: flex-end;
+      }
+      .options button {
+        height: 40px;
+        width: 40px;
+        font-size: 19px;
+        border: none;
+        cursor: pointer;
+        background: none;
+        color: #efefef;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+      .options button :where(i, span) {
+        height: 100%;
+        width: 100%;
+        line-height: 40px;
+      }
+      .options button:hover :where(i, span) {
+        color: #fff;
+      }
+      .options button:active :where(i, span) {
+        transform: scale(0.9);
+      }
+      .options button span {
+        font-size: 23px;
+      }
+      .options input {
+        height: 4px;
+        margin-left: 3px;
+        max-width: 75px;
+        accent-color: #0078ff;
+      }
+      .options .video-timer {
+        color: #efefef;
+        margin-left: 15px;
+        font-size: 14px;
+      }
+      .video-timer .separator {
+        margin: 0 5px;
+        font-size: 16px;
+        font-family: "Open sans";
+      }
+      .playback-content {
+        display: flex;
+        position: relative;
+      }
+      .playback-content .speed-options {
+        position: absolute;
+        list-style: none;
+        left: -40px;
+        bottom: 40px;
+        width: 95px;
+        overflow: hidden;
+        opacity: 0;
+        border-radius: 4px;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: opacity 0.13s ease;
+      }
+      .playback-content .speed-options.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .speed-options li {
+        cursor: pointer;
+        color: #000;
+        font-size: 14px;
+        margin: 2px 0;
+        padding: 5px 0 5px 15px;
+        transition: all 0.1s ease;
+      }
+      .speed-options li:where(:first-child, :last-child) {
+        margin: 0px;
+      }
+      .speed-options li:hover {
+        background: #dfdfdf;
+      }
+      .speed-options li.active {
+        color: #fff;
+        background: #3e97fd;
+      }
+      .container video {
+        width: 100%;
+      }
+
+      @media screen and (max-width: 540px) {
+        .wrapper .video-controls {
+          padding: 3px 10px 7px;
+        }
+        .options input,
+        .progress-area span {
+          display: none !important;
+        }
+        .options button {
+          height: 30px;
+          width: 30px;
+          font-size: 17px;
+        }
+        .options .video-timer {
+          margin-left: 5px;
+        }
+        .video-timer .separator {
+          font-size: 14px;
+          margin: 0 2px;
+        }
+        .options button :where(i, span) {
+          line-height: 30px;
+        }
+        .options button span {
+          font-size: 21px;
+        }
+        .options .video-timer,
+        .progress-area span,
+        .speed-options li {
+          font-size: 12px;
+        }
+        .playback-content .speed-options {
+          width: 75px;
+          left: -30px;
+          bottom: 30px;
+        }
+        .speed-options li {
+          margin: 1px 0;
+          padding: 3px 0 3px 10px;
+        }
+        .right .pic-in-pic {
+          display: none;
+        }
+      }
+
+      .excel-file-input-box {
+        width: 100%;
+        margin: 0 auto;
+      }
+      .excel-file-input-box input[type="file"] {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        height: 40px;
+        width: 100%;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      input[type="file"]:hover {
+        background-color: #ddd;
+      }
+
+      input[type="file"]:active {
+        background-color: #bbb;
+      }
+
+      ::file-selector-button {
+        background-color: #e0e0e0;
+        color: #000;
+        text-transform: capitalize;
+        font-size: 13px;
+        border: solid 1px #ccc;
+
+        height: 30px;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+
+      label {
+        font-size: 12px;
+        color: #999;
+      }
+      .search-filter-box {
+        width: 100%;
+        margin: 0 auto;
+        height: 40px;
+
+        display: flex;
+      }
+      input[type="text"] {
+        width: 87%;
+        border-radius: 20px 0 0 20px;
+        border: solid 1px #ccc;
+        border-right: none;
+        height: 40px;
+        font-size: 16px;
+        padding-inline: 10px;
+      }
+
+      .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            outline: none;
+        }
+        .btn-15 {
+            background: #dd3434;
+            border: none;
+            z-index: 1;
+        }
+
+        .btn-15:after {
+            position: absolute;
+            content: "";
+            width: 0;
+
+            height: 100%;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            background-color: #dd3434;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-15:hover {
+
+            color: #fff;
+        }
+
+        .btn-15:hover:after {
+            left: 0;
+            border-top-right-radius: 21px;
+            border-bottom-right-radius: 21px;
+            width: 100%;
+        }
+
+        .btn-15:active {
+            top: 2px;
+        }
+
+        .searchResultItem {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+/* Styling for card content */
+.searchResultItem .card-content {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+/* Media query to display one card per row on smaller screens */
+@media screen and (max-width: 540px) {
+  .searchResultItem {
+    width: calc(100% - 20px);
+  }
+}
+
+.scroll-left{
+    background-color: #f8f9fa80;
+              backdrop-filter: blur(9px);
+              border-radius: 0 0 0 0;
+              max-height: 700px;
+              overflow-y: auto;
+              width: 700px;
+}
+
+.scroll-left::-webkit-scrollbar {
+  display: none;
+}
+
+.arrow-container {
+  width: 30px;
+  height: 30px;
+  background-color: #95989b; /* You can set the background color of the circular shape */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.arrow-icon {
+  color: #ffffff; /* Set the color of the arrow icon */
+}
+
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+      <a class="navbar-brand" href="#">Exhibit On Watch</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown"> <!-- Add dropdown class to this li element -->
+            <a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Upload <!-- Dropdown toggle button -->
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="nav-link dropdown-item" href="csv-upload.html">Upload CSV</a> <!-- Dropdown items -->
+                <a class="nav-link dropdown-item" href="video-upload.html">Upload Video</a>
+            </div>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- <div>{{e}}</div> -->
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Left Column -->
+          <div
+            class="col-md-3 p-0 d-flex flex-column scroll-left"
+          >
+            <div class="p-4">
+              <img src="https://img.icons8.com/?size=512&id=cO5OxsYSK7Lh&format=png" alt="Search Image" style="max-width: 100%; height: 20%"/>
+
+              <!-- Search Bar -->
+              <div class="mt-3">
+                <div class="search-filter-box mb-5" id="Search-by-time">
+                  <input type="text" id="searchByStartTimeInput" placeholder="Jump to time(00:00:00)">
+                  <br><br>
+                  <button  class="custom-btn btn-15" id="searchByStartTimeButton" style="border-top-right-radius: 21px;border-bottom-right-radius: 21px;">Search</button>
+              </div>
+
+                <div class="search-filter-box">
+                  <!-- <input type="text" id="searchInput" placeholder="Search for name">
+                  <button id="searchButton">Search</button>
+                  <div id="message"></div> -->
+
+                  <input type="text" id="searchInput" placeholder="Search by name" list="nameOptions">
+                    <datalist id="nameOptions"></datalist>
+                    <button id="searchButton" class="custom-btn btn-15 btn-danger" style="border-top-right-radius: 21px;border-bottom-right-radius: 21px;">Search</button>
+
+                </div>
+                <div id="searchResults">
+                  <!-- Search result items will be appended here -->
+                </div>
+
+
+              </div>
+
+              <div id="searchResultsContainer" class="row">
+                <!-- Search result cards will be appended here -->
+              </div>
+
+              <div id="notFoundMessage" style="display: none;">No matching results found.</div>
+            </div>
+          </div>
+
+
+
+        <!-- Right Column -->
+        <div class="col-md-9 p-0">
+          <div class="container show-controls">
+            <div class="wrapper">
+              <div class="div1">
+                <div class="container show-controls">
+                  <div class="wrapper">
+                    <div class="video-timeline">
+                      <div class="progress-area">
+                        <span>00:00</span>
+                        <div class="progress-bar"></div>
+                      </div>
+                    </div>
+                    <ul class="video-controls">
+                      <li class="options left">
+                        <button class="volume" data-toggle="tooltip" title="Volume">
+                          <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                        <input type="range" min="0" max="1" step="any" />
+                        <div class="video-timer">
+                          <p class="current-time">00:00:00</p>
+                          <p class="separator">/</p>
+                          <p class="video-duration">00:00:00</p>
+                        </div>
+                      </li>
+                      <li class="options center">
+                        <button class="skip-backward" data-toggle="tooltip" title="Skip Backward">
+                          <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="play-pause" data-toggle="tooltip" title="Play/Pause">
+                          <i class="fas fa-play"></i>
+                        </button>
+                        <button class="skip-forward" data-toggle="tooltip" title="Skip Forward" >
+                          <i class="fas fa-forward"></i>
+                        </button>
+                      </li>
+                      <li class="options right">
+                        <div class="playback-content">
+                          <button class="playback-speed" data-toggle="tooltip" title="playback-speed">
+                            <span class="material-symbols-rounded"
+                              >slow_motion_video</span>
+                          </button>
+                          <ul class="speed-options">
+                            <li data-speed="2">2x</li>
+                            <li data-speed="1.5">1.5x</li>
+                            <li data-speed="1" class="active">Normal</li>
+                            <li data-speed="0.75">0.75x</li>
+                            <li data-speed="0.5">0.5x</li>
+                          </ul>
+                        </div>
+                        <button class="pic-in-pic" data-toggle="tooltip" title="Pic-in-Pic">
+                          <span class="material-icons">picture_in_picture_alt</span>
+                        </button>
+                        <button class="fullscreen" data-toggle="tooltip" title="Fullscreen">
+                          <i class="fa-solid fa-expand"></i>
+                        </button>
+                        <button class="downloadBtn" id="downloadButton" onclick="downloadVideo()" data-toggle="tooltip" title="Dowload">
+                            <i class="fa-solid fa-download"></i>
+                          </button>
+                          
+                          <button class="downloadButton" id="downloadButton" data-toggle="tooltip" title="Custom Download"
+                              onclick="location.href='{% url 'crop' %}';">
+                              <i class="fa-solid fa-file-export"></i>
+                          </button>
+
+                      </li>
+                    </ul>
+                  </div>
+                  <video src="{{i}}"  type="video/mp4" id="videoPlayer" height="100%"></video>
+                  <!-- <video src="C:\Users\DINESH\Documents\XOW\Output_20240601_121917_PM.mp4"  type="video/mp4" id="videoPlayer" ></video> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+	  let time = parseInt("{{time}}")
+    const startingTimeInSeconds=time;
+    const endingTimeInSeconds=time;
+    console.log("Hi dinesh this is startTimeInseconds ------------> ",startingTimeInSeconds);
+    console.log("Hi dinesh this is endingTimeSeconds -------------> ",endingTimeInSeconds);
+
+      $(function () {
+              $('[data-toggle="tooltip"]').tooltip();
+             });
+            const container = document.querySelector(".container"),
+              mainVideo = container.querySelector("video"),
+              videoTimeline = container.querySelector(".video-timeline"),
+              progressBar = container.querySelector(".progress-bar"),
+              volumeBtn = container.querySelector(".volume i"),
+              volumeSlider = container.querySelector(".left input");
+            (currentVidTime = container.querySelector(".current-time")),
+              (videoDuration = container.querySelector(".video-duration")),
+              (skipBackward = container.querySelector(".skip-backward i")),
+              (skipForward = container.querySelector(".skip-forward i")),
+              (playPauseBtn = container.querySelector(".play-pause i")),
+              (speedBtn = container.querySelector(".playback-speed span")),
+              (speedOptions = container.querySelector(".speed-options")),
+              (pipBtn = container.querySelector(".pic-in-pic span")),
+              (fullScreenBtn = container.querySelector(".fullscreen i"));
+            let timer;
+            
+            container.addEventListener("mousemove", () => {
+              container.classList.add("show-controls");
+              clearTimeout(timer);
+             // hideControls();
+            });
+
+            const formatTime = (time) => {
+              let seconds = Math.floor(time % 60),
+                minutes = Math.floor(time / 60) % 60,
+                hours = Math.floor(time / 3600);
+
+              seconds = seconds < 10 ? `0${seconds}` : seconds;
+              minutes = minutes < 10 ? `0${minutes}` : minutes;
+              hours = hours < 10 ? `0${hours}` : hours;
+
+              if (hours == 0) {
+                return `${minutes}:${seconds}`;
+              }
+              return `${hours}:${minutes}:${seconds}`;
+            };
+			
+            videoTimeline.addEventListener("mousemove", (e) => {
+              let timelineWidth = videoTimeline.clientWidth;
+              let offsetX = e.offsetX;
+              let percent = Math.floor(
+                (offsetX / timelineWidth) * mainVideo.duration
+              );
+              const progressTime = videoTimeline.querySelector("span");
+              offsetX =
+                offsetX < 20
+                  ? 20
+                  : offsetX > timelineWidth - 20
+                  ? timelineWidth - 20
+                  : offsetX;
+              progressTime.style.left = `${offsetX}px`;
+              progressTime.innerText = formatTime(percent+time);
+            });
+
+            videoTimeline.addEventListener("click", (e) => {
+              let timelineWidth = videoTimeline.clientWidth;
+              mainVideo.currentTime =
+                (e.offsetX / timelineWidth) * mainVideo.duration;
+            });
+
+            mainVideo.addEventListener("timeupdate", (e) => {
+              let { currentTime, duration } = e.target;
+              let percent = (currentTime / duration) * 100;
+              progressBar.style.width = `${percent}%`;
+              currentVidTime.innerText = formatTime(currentTime+time);
+            });
+
+            mainVideo.addEventListener("loadeddata", () => {
+              videoDuration.innerText = formatTime(mainVideo.duration+time);
+            });
+
+            const draggableProgressBar = (e) => {
+              let timelineWidth = videoTimeline.clientWidth;
+              progressBar.style.width = `${e.offsetX}px`;
+              mainVideo.currentTime =
+                (e.offsetX / timelineWidth) * mainVideo.duration;
+              currentVidTime.innerText = formatTime(mainVideo.currentTime+time);
+            };
+
+            volumeBtn.addEventListener("click", () => {
+              if (!volumeBtn.classList.contains("fa-volume-high")) {
+                mainVideo.volume = 0.5;
+                volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+              } else {
+                mainVideo.volume = 0.0;
+                volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
+              }
+              volumeSlider.value = mainVideo.volume;
+            });
+
+            volumeSlider.addEventListener("input", (e) => {
+              mainVideo.volume = e.target.value;
+              if (e.target.value == 0) {
+                return volumeBtn.classList.replace(
+                  "fa-volume-high",
+                  "fa-volume-xmark"
+                );
+              }
+              volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+            });
+
+            speedOptions.querySelectorAll("li").forEach((option) => {
+              option.addEventListener("click", () => {
+                mainVideo.playbackRate = option.dataset.speed;
+                speedOptions.querySelector(".active").classList.remove("active");
+                option.classList.add("active");
+              });
+            });
+
+            document.addEventListener("click", (e) => {
+              if (
+                e.target.tagName !== "SPAN" ||
+                e.target.className !== "material-symbols-rounded"
+              ) {
+                speedOptions.classList.remove("show");
+              }
+            });
+
+            function downloadVideo() {
+                  const video = document.getElementById("videoPlayer");
+                  const a = document.createElement("a");
+                  a.href = video.src;
+                  a.download = video.src;
+                  a.click();
+            }
+
+            fullScreenBtn.addEventListener("click", () => {
+              container.classList.toggle("fullscreen");
+              if (document.fullscreenElement) {
+                fullScreenBtn.classList.replace("fa-compress", "fa-expand");
+                return document.exitFullscreen();
+              }
+              fullScreenBtn.classList.replace("fa-expand", "fa-compress");
+              container.requestFullscreen();
+            });
+
+            speedBtn.addEventListener("click", () =>
+              speedOptions.classList.toggle("show")
+            );
+            pipBtn.addEventListener("click", () =>
+              mainVideo.requestPictureInPicture()
+            );
+            skipBackward.addEventListener(
+              "click",
+              () => (mainVideo.currentTime -= 5)
+            );
+            skipForward.addEventListener("click", () => (mainVideo.currentTime += 5));
+            mainVideo.addEventListener("play", () =>
+              playPauseBtn.classList.replace("fa-play", "fa-pause")
+            );
+            mainVideo.addEventListener("pause", () =>
+              playPauseBtn.classList.replace("fa-pause", "fa-play")
+            );
+            playPauseBtn.addEventListener("click", () =>
+              mainVideo.paused ? mainVideo.play() : mainVideo.pause()
+            );
+            videoTimeline.addEventListener("mousedown", () =>
+              videoTimeline.addEventListener("mousemove", draggableProgressBar)
+            );
+            document.addEventListener("mouseup", () =>
+              videoTimeline.removeEventListener("mousemove", draggableProgressBar)
+            );
+          </script>
+         <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+        <script>
+          var config = {
+       apiKey: "AIzaSyDfStYg1oybMuNWma1-4KGJynjrPwIfyhU",
+          authDomain: "exhibiton-ce35a.firebaseapp.com",
+          databaseURL: "https://exhibiton-ce35a-default-rtdb.firebaseio.com",
+          storageBucket: "exhibiton-ce35a.appspot.com",
+          messagingSenderId: "241695038706"
+
+
+          };
+          firebase.initializeApp(config);
+    //csv reader
+
+const videoPlayer = document.getElementById('videoPlayer');
+const searchButton = document.getElementById('searchButton');
+const searchInput = document.getElementById('searchInput');
+const nameOptions = document.getElementById('nameOptions');
+
+let csvData = []; // To store parsed CSV data
+
+console.log("Hi dinesh this is csvdata ------------>  ".csvData)
+
+fetch("{% static 'files/sheets.csv' %}")
+.then(response => response.text())
+  .then(data => {
+    csvData = data.split('\n').map(line => line.split(',').map(item => item.toLowerCase()));
+    populateNameOptions();
+  })
+  .catch(error => {
+    console.error('Error reading CSV file:', error);
+  });
+
+  function populateNameOptions() {
+  const uniqueNames = Array.from(new Set(csvData.map(row => row[0])));
+  const nameOptions = document.getElementById('nameOptions');
+  const searchInput = document.getElementById('searchInput');
+
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value;
+    console.log("hi dinesh this is search term from search input---> ",searchTerm);
+    nameOptions.innerHTML = '';
+
+    uniqueNames.forEach(name => {
+      if (name.toLowerCase().includes(searchTerm)) {
+        const option = document.createElement('option');
+        option.value = name;
+        nameOptions.appendChild(option);
+      }
+    });
+  });
+}
+
+ searchButton.addEventListener('click', () => {
+      const target = searchInput.value.toLowerCase();
+      console.log("HI dinesh I'm from searchButton target value -----> ",target)
+      const matchingDetails = [];
+      
+
+      for (const row of csvData) {
+        const [QR_CODE,	Name,	Company_Name,	Phone, Email,DATE_AND_TIME] = row;
+        if (Name === target || Company_Name === target) {
+          matchingDetails.push({QR_CODE,Name, Company_Name, Phone,Email,DATE_AND_TIME});
+        }
+      }
+
+      if (matchingDetails.length > 0) {
+        for (const i of matchingDetails) {
+          console.log("I'm from matchingDetails ---> ", i);
+        }
+      } else {
+        console.log("No matching details found.");
+      }
+
+
+
+  if (matchingDetails.length > 0) {
+    displayDetailsAndPlay(matchingDetails);
+    updateSearchResults(matchingDetails);
+    document.getElementById('notFoundMessage').style.display = 'none'; // Hide "not found" message
+  } else {
+    clearSearchResults();
+    document.getElementById('notFoundMessage').style.display = 'block'; // Show "not found" message
+  }
+});
+
+function timeToSeconds(time) {
+    const parts = time.split(':');
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    const seconds = parseInt(parts[2], 10);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  
+
+// Search by start time
+const searchByStartTimeButton = document.getElementById('searchByStartTimeButton');
+const searchByStartTimeInput = document.getElementById('searchByStartTimeInput');
+
+searchByStartTimeButton.addEventListener('click', () => {
+  const targetStartTime = searchByStartTimeInput.value;
+  const givenTime=timeToSeconds(targetStartTime);
+
+  console.log("Hi dinesh this is taregetStartTime -------> ",targetStartTime);
+  console.log("Hi dinesh this is Giventime -------> ",givenTime);
+
+  if(givenTime>startingTimeInSeconds || givenTime<endingTimeInSeconds)
+    playVideoAtStartTime(targetStartTime);
+  else
+    alert("Enter Valid Time to Jump");
+});
+let hr = parseInt("{{hr}}")
+let min = parseInt("{{min}}")
+let sec = parseInt("{{sec}}")
+function playVideoAtStartTime(startTime) {
+  const [hours, minutes, seconds] = startTime.split(':');
+  const totalSeconds = parseInt(hours-hr) * 3600 + parseInt(minutes-min) * 60 + parseInt(seconds-sec);
+
+  videoPlayer.currentTime = totalSeconds;
+  videoPlayer.play();
+}
+
+
+
+// Function to update the search results on the UI
+function updateSearchResults(detailsArray) {
+  const searchResultsContainer = document.getElementById('searchResults');
+  searchResultsContainer.innerHTML = ''; // Clear previous results
+
+  if (detailsArray.length === 0) {
+    document.getElementById('notFoundMessage').style.display = 'block'; // Show "not found" message if no results
+    return;
+  } else {
+    document.getElementById('notFoundMessage').style.display = 'none'; // Hide "not found" message
+  }
+
+  detailsArray.forEach(details => {
+    const div = document.createElement('div');
+    div.classList.add('searchResultItem');
+
+    // Create a div for each piece of information
+    const nameDiv = document.createElement('div');
+    nameDiv.innerHTML = `Name: ${details.Name}`; // Ensure correct case for "Name"
+    
+    const companyDiv = document.createElement('div');
+    companyDiv.innerHTML = `Company Name: ${details.Company_Name}`; // Correct case for "Company_Name"
+    
+    const startTimeDiv = document.createElement('div');
+    startTimeDiv.innerHTML = `Start Time: ${details.DATE_AND_TIME}`;
+    
+    // Create a right arrow in a circular icon
+    const arrowDiv = document.createElement('div');
+    arrowDiv.classList.add('arrow-container');
+    const arrowIcon = document.createElement('i');
+    arrowIcon.classList.add('fas', 'fa-arrow-right', 'arrow-icon');
+    arrowDiv.appendChild(arrowIcon);
+
+    // Add click event listener to play the video segment
+    div.addEventListener('click', () => {
+      playVideoSegment(details.DATE_AND_TIME, details.endTime);
+    });
+
+    // Append the information divs to the main div
+    div.appendChild(nameDiv);
+    div.appendChild(companyDiv);
+    div.appendChild(startTimeDiv);
+    div.appendChild(arrowDiv); 
+
+    // Append the main div to the search results container
+    searchResultsContainer.appendChild(div);
+  });
+}
+
+// Function to clear search results and hide "not found" message
+function clearSearchResults() {
+  const searchResultsContainer = document.getElementById('searchResults');
+  searchResultsContainer.innerHTML = '';
+  document.getElementById('notFoundMessage').style.display = 'none'; // Hide "not found" message
+}
+
+// Function to display details and play video (improved)
+function displayDetailsAndPlay(detailsArray) {
+  console.log("hi this is detailsArray--->>", detailsArray);
+  let detailsContainer = document.getElementById('detailsContainer');
+  
+  if (!detailsContainer) {
+    detailsContainer = document.createElement('div'); // Create the container if it doesn't exist
+    detailsContainer.id = 'detailsContainer';
+    document.body.appendChild(detailsContainer);
+    console.log("Created new detailsContainer and appended to the body.");
+  } else {
+    detailsContainer.innerHTML = ''; // Clear existing content
+    console.log("Cleared existing detailsContainer content.");
+  }
+
+  // Populate the container with details
+  detailsArray.forEach(details => {
+    const detailElement = document.createElement('div');
+    detailElement.className = 'detail';
+    detailsContainer.appendChild(detailElement);
+  });
+
+  console.log("Details displayed inside detailsContainer");
+}
+
+
+video_url1=document.getElementById("videoPlayer").src;
+// Function to play video segment based on start and end times
+function playVideoSegment(startTime, endTime) {
+  const [startHours, startMinutes, startSeconds] = startTime.split(':');
+    // const [endHours, endMinutes, endSeconds] = endTime.split(':');
+
+    const startTotalSeconds = parseInt(startHours-hr) * 3600 + parseInt(startMinutes-min) * 60 + parseInt(startSeconds-sec);
+    // const endTotalSeconds = parseInt(endHours-18) * 3600 + parseInt(endMinutes-0) * 60 + parseInt(endSeconds-56);
+
+    videoPlayer.src = video_url1; // Replace with the actual video source URL
+    videoPlayer.currentTime = startTotalSeconds; // Set starting point in seconds
+    videoPlayer.play();
+
+    // const intervalId = setInterval(() => {
+    //   if (videoPlayer.currentTime >= endTotalSeconds) {
+    //     videoPlayer.pause();
+    //     clearInterval(intervalId);
+    //   }
+    // }, 1000);
+}
+
+    </script>
+  </body>
+</html>

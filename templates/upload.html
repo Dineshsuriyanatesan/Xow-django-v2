@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>video-upload</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/profile.css' rel='stylesheet'>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url("https://images.saymedia-content.com/.image/t_share/MTkzOTUzODU0MDkyODc5MzY1/particlesjs-examples.gif");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100%;
+        }
+
+        /* Navbar */
+        /* Add the underline effect for nav-links */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link {
+            position: relative;
+            color: #333; /* Default text color */
+            text-decoration: none; /* Remove the default underline */
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #663dff; /* Change this color to your desired underline color */
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #b621fe; /* Change this color to your desired hover text color */
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+
+
+
+
+
+
+
+
+
+        button {
+            margin: 20px;
+        }
+
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            outline: none;
+        }
+
+        .btn-15 {
+            background: #b621fe;
+            border: none;
+            z-index: 1;
+        }
+
+        .btn-15:after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 100%;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            background-color: #663dff;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                7px 7px 20px 0px rgba(0, 0, 0, .1),
+                4px 4px 5px 0px rgba(0, 0, 0, .1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-15:hover {
+            color: #fff;
+        }
+
+        .btn-15:hover:after {
+            left: 0;
+            width: 100%;
+        }
+
+        .btn-15:active {
+            top: 2px;
+        }
+        
+         /* Circular back button */
+.circular-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #b621fe;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.circular-button ion-icon {
+    font-size: 20px;
+}
+
+.circular-button:hover {
+    background-color: #b621fe;
+    border-color: #fff;
+}
+
+
+        h1 {
+            font-family: noto sans korean;
+            font-weight: 500;
+            color: rgb(29, 37, 37);
+        }
+
+        .bg {
+            background-image: linear-gradient(-60deg, rgba(172, 178, 201, 0.423) 50%, rgba(190, 197, 225, 0.423) 50%);
+            border-radius: 20px;
+            box-shadow: 5px 5px rgb(171, 169, 169);
+        }
+
+        .text{
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <a class="navbar-brand" href="#">Exhibit on Watch</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link"  href="{% url 'upload' %}">Upload</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+
+                </li>
+                 <li class="nav-item">
+
+                    <a class="nav-item" > <i style="margin-left:10px;" class="gg-profile"></i>{{name}}</a>
+
+                </li>
+<!--                <li class="nav-item"><a class="nav-link" ><i class="gg-profile"></i>{{name}}</a></li>-->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+    
+
+          <!-- back button -->
+          <button type="button" onclick="goBack()" class="circular-button back-button">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center text">
+                    <div class="card mt-5 bg">
+                        <div class="card-body">
+                            <form action="/post_create/" method="post">
+                              {% csrf_token %}
+                                <h3 id="sdx">Video Upload</h3>
+                                <p id="sdx1">!!!Get Started by uploading your Video!!!</p>
+                               <input type="file" name="files[]" id="files">
+                               <input type="hidden" name="url" id="url">
+                               <button type="button" id="upx" onclick="uploadimage()" class="custom-btn btn-15">Upload</button><br><br>
+                               <h6 id="updng"></h6>
+                               <button type="submit" value="submit" style="display:none;" id="super" class="custom-btn btn-15">Go!</button>
+                               {% comment %} <p style="font-size:10px;color:red">*click Submit only if the video is uploaded(Alert message will pop...)</p> {% endcomment %}
+                           </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+<script type="text/javascript">
+    var a="{{name}}"
+    console.log(a);
+</script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+  <script>
+    var config = {
+ apiKey: "AIzaSyDfStYg1oybMuNWma1-4KGJynjrPwIfyhU",
+    authDomain: "exhibiton-ce35a.firebaseapp.com",
+    databaseURL: "https://exhibiton-ce35a-default-rtdb.firebaseio.com",
+    storageBucket: "exhibiton-ce35a.appspot.com",
+    messagingSenderId: "241695038706"
+      
+  
+    };
+
+
+
+
+
+
+    firebase.initializeApp(config);
+
+     // function to navigate back
+     function goBack() {
+        window.history.back();
+    }
+
+    // Get a reference to the storage service, which is used to create references in your storage bucket
+
+    function uploadimage() {
+
+        
+      document.getElementById('upx').textContent = "Uploading!";
+      document.getElementById('updng').textContent = "Video Uploading, Please Wait!";
+      var storage = firebase.storage();
+      var file = document.getElementById("files").files[0];
+      var storageRef = storage.ref();
+      var thisref = storageRef.child(file.name).put(file);
+      thisref.on(
+        "state_changed",
+        function (snapshot) {
+          console.log("file uploaded succesfully");
+        },
+        function (error) {},
+
+        function () {
+          // Upload completed successfully, now we can get the download URL
+          var downloadURL = thisref.snapshot.downloadURL;
+          console.log("got url");
+          document.getElementById("url").value = downloadURL;
+          document.getElementById('upx').style.display = "none";
+          document.getElementById('files').style.display = "none";
+          document.getElementById('sdx').style.display = "none";
+          document.getElementById('sdx1').style.display = "none";
+
+          document.getElementById('updng').textContent = "Video Uploaded Successfully!";
+          document.getElementById("super").style.display = "block";
+        }
+      );
+    }
+  </script>
+
+</html>
