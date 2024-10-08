@@ -90,7 +90,7 @@ python-dateutil==2.9.0.post0
 python-jwt==4.1.0
 python-vlc==3.0.20123
 pytz==2024.1
-pywin32==306
+
 pywin32-ctypes==0.2.2
 PyYAML==6.0.1
 referencing==0.35.1

@@ -19,14 +19,22 @@ import cv2
 from django.conf.urls.static import static
 from datetime import datetime, timedelta
 import json
-
+import platform
 
 
 # Define constants
 VIDEO_QUALITY = 18
 VIDEO_PRESET = 'medium'
-#create a Tesseract OCR instance 
-pytesseract.pytesseract.tesseract_cmd = os.path.join(os.path.dirname(__file__), "Tesseract-OCR", "tesseract.exe")
+if platform.system() == "Windows":
+    # Set the path to the tesseract executable within the Tesseract-OCR folder
+    pytesseract.pytesseract.tesseract_cmd = os.path.join(os.path.dirname(__file__), "Tesseract-OCR", "tesseract.exe")
+    # Assuming FFmpeg is in the same folder structure or provide the exact path if it's located elsewhere
+    ffmpeg_path = os.path.join(os.path.dirname(__file__), "ffmpeg-v1", "ffmpeg.exe")
+else:
+    # For Linux or macOS, assuming tesseract and ffmpeg are installed in /usr/bin/
+    pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+    ffmpeg_path = '/usr/bin/ffmpeg'
+
 
 config = {
 
@@ -225,6 +233,27 @@ def crop(request):
 
     return render(request, 'crop.html', {'i': video_url,})
 
+def clean_text(sentence:str)->str:
+    a = list(sentence)[::-1]
+    numberset = set("1234567890")
+    for i in range(len(a)):
+        if a[i] in numberset:
+            return ''.join(a[i:][::-1]).strip()
+    return sentence
+
+def clean_timestamp_string(input_str):
+    # Find the position of "Date:" in the string
+    date_index = input_str.find("Date:")
+    
+    # If "Date:" is found, extract the substring from that point onward
+    if date_index != -1:
+        cleaned_str = input_str[date_index:]
+    else:
+        # If "Date:" is not found, return the original string
+        cleaned_str = input_str
+    
+    return cleaned_str    
+
 def extract_timestamp(frame, x=0, y=0, w=1000, h=100):
     try:
         timestamp_crop = frame[y:y+h, x:x+w]
@@ -232,12 +261,23 @@ def extract_timestamp(frame, x=0, y=0, w=1000, h=100):
         _, timestamp_thresh = cv2.threshold(timestamp_grey, 127, 255, cv2.THRESH_BINARY)
         cv2.imwrite("frame_2.jpg",timestamp_thresh)
         candidate_str = pytesseract.image_to_string(timestamp_thresh, config='--psm 6')
+        candidate_str=clean_timestamp_string(candidate_str)
+        candidate_str = clean_text(candidate_str)
+        print(f"candidate_str from extracttime stamp-->>{candidate_str}")
+
         
-        regex_str = r'Date:\s(\d{4}-\d{2}-\d{2})\sTime:\s(\d{2}:\d{2}:\d{2}\s(?:AM|PM))\sFrame:\s(\d{2}:\d{2}:\d{2}:\d{2})'
+        regex_str = r'Date:\s(\d{4}[-—]{1,2}\d{2}[-—]{1,2}\d{2})\sTime:\s(\d{2}:\d{2}:\d{2}\s(?:AM|PM))\sFrame:\s(\d{2}:\d{2}:\d{2}:\d{2})\s*$'
         match = re.search(regex_str, candidate_str)
+        print(f"match from extracttime stamp-->>{match}")
+
+
         
         if match:
             date_str, time_str, frame_str = match.groups()
+            print(f"date_str from extracttime stamp-->>{date_str}")
+            print(f"time_str from extracttime stamp-->>{time_str}")
+            print(f"frame_str from extracttime stamp-->>{frame_str}")
+
             return date_str, time_str, frame_str
     except Exception as e:
         print(f"Error extracting timestamp: {e}")
@@ -296,7 +336,6 @@ def download_video(video_path):
     return input_video_path
 
 def crop_video_req(input_video_path, start_time_sec, end_time_sec):
-    ffmpeg_path =os.path.join(os.path.dirname(__file__), "ffmpeg-v1", "bin", "ffmpeg.exe")
     
     output_video_path = os.path.normpath(os.path.join(os.getcwd(), 'output_cropped_video.mp4'))
     ffmpeg_cmd = [
